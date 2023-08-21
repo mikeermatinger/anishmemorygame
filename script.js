@@ -23,7 +23,7 @@ const items = [
     {name: "beaver", clan: "amik", image: "beaver.png"},
     {name: "crane", clan: "aajiijak", image: "crane.png"},
     {name: "loon", clan: "maang", image: "loon.png"},
-    {name: "marten", clan: "waabizheshi", image: "fisher.png"},
+    {name: "marten", clan: "waabizheshi", image: "marten.png"},
     {name: "heron", clan: "shagi", image: "heron.png"},
     {name: "hawk", clan: "memeskniniisi", image: "hawk.png"},
 ];

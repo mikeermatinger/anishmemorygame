@@ -186,6 +186,6 @@ const initializer = () => {
     result.innerText = "";
     wincount = 0;
     let cardValues = generateRandom();
-    console.log(cardValues);
+    // Removed: console.log(cardValues);
     matrixGenerator(cardValues);
 };

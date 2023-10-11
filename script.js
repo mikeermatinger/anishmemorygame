@@ -5,6 +5,7 @@ const stopButton = document.getElementById("stop");
 const gameContainer = document.querySelector(".game-container");
 const result = document.getElementById("result");
 const controls = document.querySelector(".controls-container");
+
 let cards;
 let interval;
 let firstCard = false;
@@ -13,19 +14,19 @@ let secondCard = false;
 
 // Items array
 const items = [
-    {name: "bear", clan: "makwa", image: "bear.png"},
-    {name: "deer", clan: "waawaashkeshi", image: "deer.png"},
-    {name: "eagle", clan: "mgizi", image: "eagle.png"},
-    {name: "fish", clan: "giigoonh", image: "fish.png"},
-    {name: "wolf", clan: "ma'iingan", image: "wolf.png"},
-    {name: "bird", clan: "benaishii", image: "bird.png"},
-    {name: "turtle", clan: "mikinaak", image: "turtle.jpeg"},
-    {name: "beaver", clan: "amik", image: "beaver.png"},
-    {name: "crane", clan: "aajiijak", image: "crane.png"},
-    {name: "loon", clan: "maang", image: "loon.png"},
-    {name: "marten", clan: "waabizheshi", image: "marten.png"},
-    {name: "heron", clan: "shagi", image: "heron.png"},
-    {name: "hawk", clan: "memeskniniisi", image: "hawk.png"},
+    {name: "bear", clan: "makwa", image: "bear.png", audio: "makwa.mp3"},
+    {name: "deer", clan: "waawaashkeshi", image: "deer.png", audio: "waawaashkeshi.mp3"},
+    {name: "eagle", clan: "mgizi", image: "eagle.png", audio: "mgizi.mp3"},
+    {name: "fish", clan: "giigoonh", image: "fish.png", audio: "giigoonh.mp3"},
+    {name: "wolf", clan: "ma'iingan", image: "wolf.png", audio: "maiingan.mp3"},
+    {name: "bird", clan: "benaishii", image: "bird.png", audio: "benaishii.mp3"},
+    {name: "turtle", clan: "mikinaak", image: "turtle.jpeg", audio: "mikinaak.mp3"},
+    {name: "beaver", clan: "amik", image: "beaver.png", audio: "amik.mp3"},
+    {name: "crane", clan: "aajiijak", image: "crane.png", audio: "aajiijak.mp3"},
+    {name: "loon", clan: "maang", image: "loon.png", audio: "maang.mp3"},
+    {name: "marten", clan: "waabizheshi", image: "marten.png", audio: "waabizheshi.mp3"},
+    {name: "heron", clan: "shagi", image: "heron.png", audio: "shagi.mp3"},
+    {name: "hawk", clan: "memeskniniisi", image: "hawk.png", audio: "memeskniniisi.mp3"},
 ];
 
 const medicinewheel = [
@@ -93,8 +94,9 @@ const matrixGenerator = (cardValues, size = 4) => {
             after => back side (contains actual image)
             data-card-value is a custom attribute which stores the names of the cards to match later
         */
+        //audio = new Audio(cardValues[i].audio);
         gameContainer.innerHTML += `
-            <div class="card-container" data-card-value="${cardValues[i].name}">
+            <div class="card-container" data-card-value="${cardValues[i].name}" data-audio-value="${cardValues[i].audio}">
                 <div class="card-before"><img src="${medicinewheel[0].image}" class="image"></div>
                 <div class="card card-after"><p class="card-title m3">${cardValues[i].clan}</p><img src="${cardValues[i].image}" class="image"><p class="card-text m3">${cardValues[i].name}</p></div>
             </div>
@@ -116,8 +118,12 @@ const matrixGenerator = (cardValues, size = 4) => {
                 if (!firstCard) {
                     // So current card will become firstCard
                     firstCard = card;
-                    // Current cards value becomes fisrtCardValue
+                    // Current cards value becomes firstCardValue
                     firstCardValue = card.getAttribute("data-card-value");
+                    // Can I add play function here??? b/c firstCardValue has just been assigned a data-card-value
+                    let cardaudio = card.getAttribute("data-audio-value");
+                    let sound = new Audio(cardaudio);
+                    sound.play();
                 }
                 else {
                     // Increment moves since user selected second card
@@ -125,6 +131,11 @@ const matrixGenerator = (cardValues, size = 4) => {
                     // secondCard and value
                     secondCard = card;
                     let secondCardValue = card.getAttribute("data-card-value");
+                    let cardaudio = card.getAttribute("data-audio-value");
+                    let sound = new Audio(cardaudio);
+                    sound.play();
+
+                    // Can/Must I add play function here also per line 123 above??? b/c line 123 above and secondCardValue has just been assigned a data-card-value
                     if (firstCardValue == secondCardValue) {
                         // If both cards match add matched class so these cards would be ignored next time
                         firstCard.classList.add("matched");
@@ -156,6 +167,12 @@ const matrixGenerator = (cardValues, size = 4) => {
     });
 };
 
+// function play() {
+    // var cardaudio = card.getAttribute('data-card-value')
+    // audio = cardaudio.audio
+    // audio.play();
+//};
+
 // Start game
 startButton.addEventListener("click", () => {
     movesCount = 0;
@@ -186,6 +203,6 @@ const initializer = () => {
     result.innerText = "";
     wincount = 0;
     let cardValues = generateRandom();
-    // Removed: console.log(cardValues);
+    console.log(cardValues, 'data-card-value');
     matrixGenerator(cardValues);
 };
